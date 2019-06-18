@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Map, GoogleApiWrapper } from "google-maps-react";
 import "./style.css";
 
-const API_KEY = process.env.GMAPS_API_KEY;
+const API_KEY = process.env.REACT_APP_GMAPS_API_KEY;
 
 const mapStyles = {
   width: "75%",
