@@ -2,11 +2,13 @@ import React, { Component } from "react";
 import { Map, GoogleApiWrapper } from "google-maps-react";
 import "./style.css";
 
+const API_KEY = process.env.GMAPS_API_KEY;
 
 const mapStyles = {
   width: "75%",
   height: "75%"
 };
+
 
 export class MapContainer extends Component {
   render() {
@@ -24,8 +26,9 @@ export class MapContainer extends Component {
   }
 }
 
+
 export default GoogleApiWrapper({
-  apiKey: "AIzaSyBKnOlZiz-UrSz5o4e3gUIraFNQkSeP0ow"
+  apiKey: API_KEY
 })(MapContainer);
 
 
