@@ -13,7 +13,6 @@ function Footer() {
       With supporting text below as a natural lead-in to additional content.
     </Card.Text>
   </Card.Body>
-  <Card.Footer className="text-muted">2 days ago</Card.Footer>
 </Card>
     );
   }

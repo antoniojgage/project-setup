@@ -9,7 +9,7 @@ function Header() {
         
           <h1 className="text-center" > WHERE </h1>
           <p className="text-center">
-            Drop A pin, Find A pin, we All Win.
+            Drop a Pin. Find a Pin. We All Win.
           </p>
       
       </Jumbotron>
