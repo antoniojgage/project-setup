@@ -1,15 +1,15 @@
-import React, { Component } from 'react';
-import { compose, withProps } from 'recompose';
+import React, { Component } from "react";
+import { compose, withProps } from "recompose";
 import {
   withScriptjs,
   withGoogleMap,
   GoogleMap,
   MarkerClusterer,
   Marker,
-} from 'react-google-maps';
+} from "react-google-maps";
 
 // import { Map, GoogleApiWrapper, InfoWindow, Marker } from "google-maps-react";
-import './style.css';
+import "./style.css";
 // import axios from 'axios';
 
 // const API_KEY = process.env.REACT_APP_GMAPS_API_KEY;
@@ -78,7 +78,7 @@ export class MapContainer extends Component {
     return (
       <GoogleMap
         onClick={this.onMapClicked}
-        defaultZoom={8}
+        defaultZoom={12}
         defaultCenter={{ lat: 30.2672, lng: -97.7431 }}
       >
         {this.renderMarkers()}
@@ -95,9 +95,9 @@ export default compose(
     googleMapURL: `https://maps.googleapis.com/maps/api/js?key=${
       process.env.REACT_APP_GMAPS_API_KEY
     }&v=3.exp&libraries=geometry,drawing,places`,
-    loadingElement: <div style={{ height: `100%` }} />,
-    containerElement: <div style={{ height: `400px` }} />,
-    mapElement: <div style={{ height: `100%` }} />,
+    loadingElement: <div style={{ height: "100%" }} />,
+    containerElement: <div style={{ height: "600px" }} />,
+    mapElement: <div style={{ height: "100%" }} />,
   }),
   withScriptjs,
   withGoogleMap,
