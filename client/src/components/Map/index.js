@@ -6,18 +6,9 @@ import {
   GoogleMap,
   MarkerClusterer,
   Marker,
+  InfoWindow,
 } from "react-google-maps";
-
-// import { Map, GoogleApiWrapper, InfoWindow, Marker } from "google-maps-react";
 import "./style.css";
-// import axios from 'axios';
-
-// const API_KEY = process.env.REACT_APP_GMAPS_API_KEY;
-
-// const mapStyles = {
-//   width: '100%',
-//   height: '80%',
-// };
 
 export class MapContainer extends Component {
   state = {
@@ -27,13 +18,18 @@ export class MapContainer extends Component {
     markers: [],
   };
 
-  onMarkerClick = (props, marker, e) =>
+  onMarkerClick = (props, marker, e) => {
+    const enteredDescription = prompt(
+      "Enter the description for this pin",
+    );
+
     this.setState({
       selectedPlace: props,
       activeMarker: marker,
       showingInfoWindow: true,
     });
-
+  };
+  
   onClose = props => {
     if (this.state.showingInfoWindow) {
       this.setState({
@@ -46,21 +42,18 @@ export class MapContainer extends Component {
   onMapClicked = (event, location, map) => {
     let latitude = event.latLng.lat();
     let longtitude = event.latLng.lng();
-    // console.log(latitude, longtitude);
+
     this.setState({
       markers: [
-        { lat: latitude, lng: longtitude },
+        {
+          lat: latitude,
+          lng: longtitude
+        },
         ...this.state.markers,
       ],
     });
-    // this.setState(prev => ({
-    //   fields: {
-    //     ...prev.fields,
-    //     location,
-    //   },
-    // }));
-    // map.panTo(location);
   };
+
   renderMarkers = () =>
     this.state.markers.map((marker, i) => {
       return (
@@ -70,6 +63,8 @@ export class MapContainer extends Component {
             lat: marker.lat,
             lng: marker.lng,
           }}
+          onClick={this.onMarkerClick}
+
         />
       );
     });
