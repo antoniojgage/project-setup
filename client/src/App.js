@@ -8,6 +8,6 @@ function App() {
       <Header />
       <Map />
     </div>
-  )
-  }
+  );
+}
 export default App;

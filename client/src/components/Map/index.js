@@ -1,130 +1,104 @@
-import React, { Component } from "react";
-import { Map, GoogleApiWrapper, InfoWindow, Marker } from "google-maps-react";
-import "./style.css";
-import { Z_BLOCK } from "zlib";
+import React, { Component } from 'react';
+import { compose, withProps } from 'recompose';
+import {
+  withScriptjs,
+  withGoogleMap,
+  GoogleMap,
+  MarkerClusterer,
+  Marker,
+} from 'react-google-maps';
 
-const API_KEY = process.env.REACT_APP_GMAPS_API_KEY;
+// import { Map, GoogleApiWrapper, InfoWindow, Marker } from "google-maps-react";
+import './style.css';
+// import axios from 'axios';
 
-const mapStyles = {
-  width: "100%",
-  height: "100%"
-};
+// const API_KEY = process.env.REACT_APP_GMAPS_API_KEY;
 
+// const mapStyles = {
+//   width: '100%',
+//   height: '80%',
+// };
 
 export class MapContainer extends Component {
-
-  state= {
+  state = {
     activeMarker: {},
     selectedPlace: {},
-    showingInfoWindow: false
+    showingInfoWindow: false,
+    markers: [],
   };
 
   onMarkerClick = (props, marker, e) =>
     this.setState({
       selectedPlace: props,
       activeMarker: marker,
-      showingInfoWindow: true
+      showingInfoWindow: true,
     });
 
   onClose = props => {
-    if (this.state.showingInfoWindow){
+    if (this.state.showingInfoWindow) {
       this.setState({
         showingInfoWindow: false,
-        activeMarker: null
+        activeMarker: null,
       });
     }
   };
 
+  onMapClicked = (event, location, map) => {
+    let latitude = event.latLng.lat();
+    let longtitude = event.latLng.lng();
+    // console.log(latitude, longtitude);
+    this.setState({
+      markers: [
+        { lat: latitude, lng: longtitude },
+        ...this.state.markers,
+      ],
+    });
+    // this.setState(prev => ({
+    //   fields: {
+    //     ...prev.fields,
+    //     location,
+    //   },
+    // }));
+    // map.panTo(location);
+  };
+  renderMarkers = () =>
+    this.state.markers.map((marker, i) => {
+      return (
+        <Marker
+          key={i}
+          position={{
+            lat: marker.lat,
+            lng: marker.lng,
+          }}
+        />
+      );
+    });
+
   render() {
     return (
-      <Map
-        google={this.props.google}
-        zoom={10}
-        style={mapStyles}
-        initialCenter={{ lat: 30.3076863, lng: -97.8934866}}
+      <GoogleMap
+        onClick={this.onMapClicked}
+        defaultZoom={8}
+        defaultCenter={{ lat: 30.2672, lng: -97.7431 }}
       >
-        <Marker
-          onClick={this.onMarkerClick}
-          name={"this better work"}
-        />
-        <InfoWindow
-          marker={this.state.activeMarker}
-          visible={this.state.showingInfoWindow}
-          onClose={this.onClose}
-        >
-          <div>
-            <h4>{this.state.selectedPlace.name}</h4>
-          </div>
-        </InfoWindow>
-      </Map> 
+        {this.renderMarkers()}
+        <div>
+          <h4>{this.state.selectedPlace.name}</h4>
+        </div>
+      </GoogleMap>
     );
   }
 }
 
-
-export default GoogleApiWrapper({
-  apiKey: API_KEY
-})(MapContainer);
-
-
-
-// class Form extends Component {
-//   // Setting the component's initial state
-//   state = {
-//     firstName: "",
-//     lastName: ""
-//   };
-
-//   handleInputChange = event => {
-//     // Getting the value and name of the input which triggered the change
-//     // const { name, value } = event.target;
-//     const name = event.target.name;
-//     const value = event.target.value;
-//     // Updating the input's state
-//     this.setState({
-//       [name]: value
-//     });
-//   };
-
-//   handleFormSubmit = event => {
-//     // Preventing the default behavior of the form submit (which is to refresh the page)
-//     event.preventDefault();
-
-//     // Alert the user their first and last name, clear `this.state.firstName` and `this.state.lastName`, clearing the inputs
-//     alert(`Hello ${this.state.firstName} ${this.state.lastName}`);
-//     this.setState({
-//       firstName: "",
-//       lastName: ""
-//     });
-//   };
-
-//   render() {
-//     // Notice how each input has a `value`, `name`, and `onChange` prop
-//     return (
-//       <div>
-//         <p>
-//           Hello {this.state.firstName} {this.state.lastName}
-//         </p>
-//         <form className="form">
-//           <input
-//             value={this.state.firstName}
-//             name="firstName"
-//             onChange={this.handleInputChange}
-//             type="text"
-//             placeholder="First Name"
-//           />
-//           <input
-//             value={this.state.lastName}
-//             name="lastName"
-//             onChange={this.handleInputChange}
-//             type="text"
-//             placeholder="Last Name"
-//           />
-//           <button onClick={this.handleFormSubmit}>Submit</button>
-//         </form>
-//       </div>
-//     );
-//   }
-// }
-
-// export default Form;
+export default compose(
+  withProps({
+    googleMapURL: `https://maps.googleapis.com/maps/api/js?key=${
+      process.env.REACT_APP_GMAPS_API_KEY
+    }&v=3.exp&libraries=geometry,drawing,places`,
+    loadingElement: <div style={{ height: `100%` }} />,
+    containerElement: <div style={{ height: `400px` }} />,
+    mapElement: <div style={{ height: `100%` }} />,
+  }),
+  withScriptjs,
+  withGoogleMap,
+)(MapContainer);
