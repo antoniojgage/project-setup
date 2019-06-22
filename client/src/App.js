@@ -1,8 +1,19 @@
 import React from "react";
-import Form from "./components/Form";
+import Header from "./components/Header/Header";
+import Map from "./components/Map";
+import Search from "./components/Search/Search";
+import Footer from "./components/Footer/Footer";
+
 
 function App() {
-  return <Form />;
+  return (
+    <div>
+      <Header />
+      <Map />
+      <Search />
+      <Footer />
+  
+    </div>
+  );
 }
-
 export default App;
