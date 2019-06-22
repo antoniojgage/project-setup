@@ -82,6 +82,7 @@ export class MapContainer extends Component {
     const enteredDescription = prompt(
       "Enter the description for this pin",
     );
+    console.log("enteredDescription");
 
     this.setState({
       selectedPlace: props,
