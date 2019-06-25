@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import { compose, withProps } from "recompose";
+import React, { Component } from 'react';
+import { compose, withProps } from 'recompose';
 import {
   withScriptjs,
   withGoogleMap,
@@ -7,8 +7,9 @@ import {
   MarkerClusterer,
   Marker,
   InfoWindow,
-} from "react-google-maps";
-import "./style.css";
+} from 'react-google-maps';
+import './style.css';
+import { Modal, Form, Button, Row, Col } from 'react-bootstrap';
 
 export class MapContainer extends Component {
   state = {
@@ -16,78 +17,122 @@ export class MapContainer extends Component {
     selectedPlace: {},
     showingInfoWindow: false,
     markers: [],
+    show: false,
+    tag: '',
   };
 
   getData = () => {
-    var request = require("request");
+    var request = require('request');
 
     var options = {
-      method: "GET",
-      url: "http://localhost:3000/api/location/locations",
+      method: 'GET',
+      url: 'http://localhost:3000/api/location/locations',
       headers: {
-        "cache-control": "no-cache",
-        Connection: "keep-alive",
-        "accept-encoding": "gzip, deflate",
-        Host: "localhost:3000",
-        "Postman-Token":
-          "4b5beafa-b5bc-4793-a566-b92fd9c80b3f,746e29c4-8563-4b1a-85cf-1be2f664c198",
-        "Cache-Control": "no-cache",
-        Accept: "*/*",
-        "User-Agent": "PostmanRuntime/7.13.0",
+        'cache-control': 'no-cache',
+        Connection: 'keep-alive',
+        'accept-encoding': 'gzip, deflate',
+        Host: 'localhost:3000',
+        'Postman-Token':
+          '4b5beafa-b5bc-4793-a566-b92fd9c80b3f,746e29c4-8563-4b1a-85cf-1be2f664c198',
+        'Cache-Control': 'no-cache',
+        Accept: '*/*',
+        'User-Agent': 'PostmanRuntime/7.13.0',
       },
     };
 
     request(options, function(error, response, body) {
-      if (error) throw new Error(error);
+      if (error) {
+        throw new Error(error);
+      }
 
-      console.log(body);
+      // console.log(body);
     });
   };
 
-  postData = (latitude, longitude, enteredDescription) => {
-    var request = require("request");
+  postData = (latitude, longitude, tag) => {
+    var request = require('request');
 
     var options = {
-      method: "POST",
-      url: "http://localhost:3000/api/location/locations",
+      method: 'POST',
+      url: 'http://localhost:3000/api/location/locations',
       headers: {
-        "cache-control": "no-cache",
-        Connection: "keep-alive",
-        "content-length": "45",
-        "accept-encoding": "gzip, deflate",
-        Host: "localhost:3000",
-        "Postman-Token":
-          "30b42cd3-c9fa-4608-84f1-9172d36f289a,44a0bfed-13a2-44f9-a048-ea33f8ea7284",
-        "Cache-Control": "no-cache",
-        Accept: "*/*",
-        "User-Agent": "PostmanRuntime/7.13.0",
-        "Content-Type": "application/x-www-form-urlencoded",
+        'cache-control': 'no-cache',
+        Connection: 'keep-alive',
+        'content-length': '45',
+        'accept-encoding': 'gzip, deflate',
+        Host: 'localhost:3000',
+        'Postman-Token':
+          '30b42cd3-c9fa-4608-84f1-9172d36f289a,44a0bfed-13a2-44f9-a048-ea33f8ea7284',
+        'Cache-Control': 'no-cache',
+        Accept: '*/*',
+        'User-Agent': 'PostmanRuntime/7.13.0',
+        'Content-Type': 'application/x-www-form-urlencoded',
       },
       form: {
         latitude: latitude,
         longitude: longitude,
-        tag: enteredDescription,
+        tag: tag,
       },
     };
 
     request(options, function(error, response, body) {
-      if (error) throw new Error(error);
-      console.log("hey");
+      if (error) {
+        throw new Error(error);
+      }
+      console.log('hey');
+
+      // console.log(body);
+    });
+  };
+
+  putData = () => {
+    var request = require('request');
+
+    var options = {
+      method: 'PUT',
+      url: 'http://localhost:3000/api/location/locations',
+      qs: { grndfk: 'grdga' },
+      headers: {
+        'cache-control': 'no-cache',
+        Connection: 'keep-alive',
+        'content-length': '11',
+        'accept-encoding': 'gzip, deflate',
+        Host: 'localhost:3000',
+        'Postman-Token':
+          '96b3158c-823f-4441-9043-65b4b467e69b,4a193f5e-b978-4257-8047-50b34be08e66',
+        'Cache-Control': 'no-cache',
+        Accept: '*/*',
+        'User-Agent': 'PostmanRuntime/7.15.0',
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      form: {
+        latitude: this.state.latitude,
+        longitude: this.state.longitude,
+        tag: this.state.tag,
+      },
+    };
+
+    request(options, function(error, response, body) {
+      if (error) {
+        throw new Error(error);
+      }
 
       console.log(body);
     });
   };
 
   onMarkerClick = (props, marker, e) => {
-    const enteredDescription = prompt(
-      "Enter the description for this pin",
-    );
-
+    // console.log('props = ', props);
+    let latitude = props.latLng.lat();
+    let longitude = props.latLng.lng();
+    console.log(longitude, latitude);
+    this.handleShow();
     this.setState({
-      selectedPlace: props,
-      activeMarker: marker,
-      showingInfoWindow: true,
+      latitude: latitude,
+      longitude: longitude,
     });
+    //show an input or modal wherever on the page, we can make it pretty later
+    // from that input console log what the user typed here.
   };
 
   onClose = props => {
@@ -129,6 +174,26 @@ export class MapContainer extends Component {
       );
     });
 
+  handleClose = () => {
+    this.setState({ show: false });
+    console.log(this.state.tag);
+    this.putData(this.state.tag);
+  };
+
+  handleShow = () => {
+    this.setState({ show: true });
+  };
+
+  handleInputChange = event => {
+    // Getting the value and name of the input which triggered the change
+    const { name, value } = event.target;
+
+    // Updating the input's state
+    this.setState({
+      [name]: value,
+    });
+  };
+
   render() {
     this.getData();
     this.postData();
@@ -142,6 +207,35 @@ export class MapContainer extends Component {
         <div>
           <h4>{this.state.selectedPlace.name}</h4>
         </div>
+
+        <Modal show={this.state.show} onHide={this.handleShow}>
+          <Modal.Header closeButton>
+            <Modal.Title>Modal heading</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <form>
+              <input
+                value={this.state.tag}
+                name="tag"
+                onChange={this.handleInputChange}
+                type="text"
+                placeholder="Tag"
+              />
+            </form>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={this.handleClose}>
+              Close
+            </Button>
+            <Button
+              type="submit"
+              variant="primary"
+              onClick={this.handleClose}
+            >
+              Save Changes
+            </Button>
+          </Modal.Footer>
+        </Modal>
       </GoogleMap>
     );
   }
@@ -152,9 +246,9 @@ export default compose(
     googleMapURL: `https://maps.googleapis.com/maps/api/js?key=${
       process.env.REACT_APP_GMAPS_API_KEY
     }&v=3.exp&libraries=geometry,drawing,places`,
-    loadingElement: <div style={{ height: "100%" }} />,
-    containerElement: <div style={{ height: "600px" }} />,
-    mapElement: <div style={{ height: "100%" }} />,
+    loadingElement: <div style={{ height: '100%' }} />,
+    containerElement: <div style={{ height: '600px' }} />,
+    mapElement: <div style={{ height: '100%' }} />,
   }),
   withScriptjs,
   withGoogleMap,
