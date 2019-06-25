@@ -34,18 +34,39 @@ router.put("/locations", function(req, res) {
   console.log("is this working");
   console.log(req.body);
 
-  db.Location.update(
-    {
-      tag: req.body.tag,
-    },
-    {
-      where: {
-        latitude: req.body.latitude,
-        longitude: req.body.longitude,
-      },
-    }).then(function(results) {
-    res.send(results);
+  var latitude = parseFloat(req.body.latitude).toFixed(5);
+  console.log(latitude);
+  var longitude= parseFloat(req.body.longitude).toFixed(5);
+  // thanks
+  db.Location.findOne({ where: {latitude: latitude, longitude: longitude} }).then(location => {
+    if(location) {
+      location.update({
+        tag: req.body.tag
+      })
+      .then( result =>
+        console.log("boom this updated")
+      )
+      .catch(err =>
+        console.log("this failed to update")
+      )
+    } else {
+      console.log("we are not finding any location");
+    }
   });
+
+
+  // db.Location.update(
+  //   {
+  //     tag: req.body.tag,
+  //   },
+  //   {
+  //     where: {
+  //       latitude: req.body.latitude,
+  //       longitude: req.body.longitude,
+  //     },
+  //   }).then(function(results) {
+  //   res.send(results);
+  // });
 });
 
 module.exports = router;
