@@ -1,8 +1,8 @@
-const router = require('express').Router();
-var db = require('../../models');
+const router = require("express").Router();
+var db = require("../../models");
 // get route -> index
-router.get('/locations', function(req, res) {
-  console.log('Sup');
+router.get("/locations", function(req, res) {
+  console.log("Sup");
   //connected to the db haters
   db.Location.findAll({}).then(function(results) {
     res.json(results);
@@ -10,20 +10,28 @@ router.get('/locations', function(req, res) {
   //do things here for other routes
 });
 
-router.post('/locations', function(req, res) {
-  console.log('Sup2');
+// and this is for creating? and yes
+router.post("/locations", function(req, res) {
+  console.log("Sup2");
   console.log(req.body);
 
-  db.Location.create({
-    latitude: req.body.latitude,
-    longitude: req.body.longitude,
-  }).then(function(results) {
-    res.send(results);
-  });
+  db.Location.count({ where: {latitude: req.body.latitude, longitude: req.body.longitude} }).then(count => {
+    if (count > 0) {
+      // dont do anything because record is already in DB
+    } else {
+      db.Location.create({
+        latitude: req.body.latitude,
+        longitude: req.body.longitude,
+      }).then(function(results) {
+        res.send(results);
+      });
+    }
+  });  
 });
 
-router.put('/locations', function(req, res) {
-  console.log('is this working');
+// so this is for updating? yes
+router.put("/locations", function(req, res) {
+  console.log("is this working");
   console.log(req.body);
 
   db.Location.update(
@@ -35,8 +43,7 @@ router.put('/locations', function(req, res) {
         latitude: req.body.latitude,
         longitude: req.body.longitude,
       },
-    },
-  ).then(function(results) {
+    }).then(function(results) {
     res.send(results);
   });
 });
