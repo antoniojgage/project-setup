@@ -3,3 +3,8 @@
     width: 100%;
     padding: 40px;
 }
+
+#search ul {
+    list-style-type: none;
+    text-align: center;
+}

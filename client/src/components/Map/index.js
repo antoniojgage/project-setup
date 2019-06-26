@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import { compose, withProps } from "recompose";
+import React, { Component } from 'react';
+import { compose, withProps } from 'recompose';
 import {
   withScriptjs,
   withGoogleMap,
@@ -7,9 +7,9 @@ import {
   MarkerClusterer,
   Marker,
   InfoWindow,
-} from "react-google-maps";
-import "./style.css";
-import { Modal, Form, Button, Row, Col } from "react-bootstrap";
+} from 'react-google-maps';
+import './style.css';
+import { Modal, Form, Button, Row, Col } from 'react-bootstrap';
 
 export class MapContainer extends Component {
   state = {
@@ -18,55 +18,55 @@ export class MapContainer extends Component {
     showingInfoWindow: false,
     markers: [],
     show: false,
-    tag: "",
+    tag: '',
   };
 
-  getData = () => {
-    var request = require("request");
+  // getData = () => {
+  //   var request = require("request");
 
-    var options = {
-      method: "GET",
-      url: "http://localhost:3000/api/location/locations",
-      headers: {
-        "cache-control": "no-cache",
-        Connection: "keep-alive",
-        "accept-encoding": "gzip, deflate",
-        Host: "localhost:3000",
-        "Postman-Token":
-          "4b5beafa-b5bc-4793-a566-b92fd9c80b3f,746e29c4-8563-4b1a-85cf-1be2f664c198",
-        "Cache-Control": "no-cache",
-        Accept: "*/*",
-        "User-Agent": "PostmanRuntime/7.13.0",
-      },
-    };
+  //   var options = {
+  //     method: "GET",
+  //     url: "http://localhost:3000/api/location/locations",
+  //     headers: {
+  //       "cache-control": "no-cache",
+  //       Connection: "keep-alive",
+  //       "accept-encoding": "gzip, deflate",
+  //       Host: "localhost:3000",
+  //       "Postman-Token":
+  //         "4b5beafa-b5bc-4793-a566-b92fd9c80b3f,746e29c4-8563-4b1a-85cf-1be2f664c198",
+  //       "Cache-Control": "no-cache",
+  //       Accept: "*/*",
+  //       "User-Agent": "PostmanRuntime/7.13.0",
+  //     },
+  //   };
 
-    request(options, function(error, response, body) {
-      if (error) {
-        throw new Error(error);
-      }
+  //   request(options, function(error, response, body) {
+  //     if (error) {
+  //       throw new Error(error);
+  //     }
 
-      // console.log(body);
-    });
-  };
+  //     // console.log(body);
+  //   });
+  // };
 
   postData = (latitude, longitude, tag) => {
-    var request = require("request");
+    var request = require('request');
 
     var options = {
-      method: "POST",
-      url: "http://localhost:3000/api/location/locations",
+      method: 'POST',
+      url: 'http://localhost:3000/api/location/locations',
       headers: {
-        "cache-control": "no-cache",
-        Connection: "keep-alive",
-        "content-length": "45",
-        "accept-encoding": "gzip, deflate",
-        Host: "localhost:3000",
-        "Postman-Token":
-          "30b42cd3-c9fa-4608-84f1-9172d36f289a,44a0bfed-13a2-44f9-a048-ea33f8ea7284",
-        "Cache-Control": "no-cache",
-        Accept: "*/*",
-        "User-Agent": "PostmanRuntime/7.13.0",
-        "Content-Type": "application/x-www-form-urlencoded",
+        'cache-control': 'no-cache',
+        Connection: 'keep-alive',
+        'content-length': '45',
+        'accept-encoding': 'gzip, deflate',
+        Host: 'localhost:3000',
+        'Postman-Token':
+          '30b42cd3-c9fa-4608-84f1-9172d36f289a,44a0bfed-13a2-44f9-a048-ea33f8ea7284',
+        'Cache-Control': 'no-cache',
+        Accept: '*/*',
+        'User-Agent': 'PostmanRuntime/7.13.0',
+        'Content-Type': 'application/x-www-form-urlencoded',
       },
       form: {
         latitude: latitude,
@@ -79,30 +79,30 @@ export class MapContainer extends Component {
       if (error) {
         throw new Error(error);
       }
-      console.log("hey");
+      console.log('hey');
 
       // console.log(body);
     });
   };
 
   putData = () => {
-    var request = require("request");
+    var request = require('request');
 
     var options = {
-      method: "PUT",
-      url: "http://localhost:3000/api/location/locations",
+      method: 'PUT',
+      url: 'http://localhost:3000/api/location/locations',
       headers: {
-        "cache-control": "no-cache",
-        Connection: "keep-alive",
-        "content-length": "11",
-        "accept-encoding": "gzip, deflate",
-        Host: "localhost:3000",
-        "Postman-Token":
-          "032c3c6c-91a1-4718-81cf-e98449d1647a,4ede4ae6-d272-477c-93d2-7fea8b744d47",
-        "Cache-Control": "no-cache",
-        Accept: "*/*",
-        "User-Agent": "PostmanRuntime/7.15.0",
-        "Content-Type": "application/x-www-form-urlencoded",
+        'cache-control': 'no-cache',
+        Connection: 'keep-alive',
+        'content-length': '11',
+        'accept-encoding': 'gzip, deflate',
+        Host: 'localhost:3000',
+        'Postman-Token':
+          '032c3c6c-91a1-4718-81cf-e98449d1647a,4ede4ae6-d272-477c-93d2-7fea8b744d47',
+        'Cache-Control': 'no-cache',
+        Accept: '*/*',
+        'User-Agent': 'PostmanRuntime/7.15.0',
+        'Content-Type': 'application/x-www-form-urlencoded',
       },
 
       form: {
@@ -152,7 +152,7 @@ export class MapContainer extends Component {
       markers: [
         {
           lat: latitude,
-          lng: longitude,
+          lng: longitude, 
         },
         ...this.state.markers,
       ],
@@ -195,7 +195,7 @@ export class MapContainer extends Component {
   };
 
   render() {
-    this.getData();
+    // this.getData();
     // this.postData();
     return (
       <GoogleMap
@@ -243,9 +243,9 @@ export default compose(
     googleMapURL: `https://maps.googleapis.com/maps/api/js?key=${
       process.env.REACT_APP_GMAPS_API_KEY
     }&v=3.exp&libraries=geometry,drawing,places`,
-    loadingElement: <div style={{ height: "100%" }} />,
-    containerElement: <div style={{ height: "600px" }} />,
-    mapElement: <div style={{ height: "100%" }} />,
+    loadingElement: <div style={{ height: '100%' }} />,
+    containerElement: <div style={{ height: '600px' }} />,
+    mapElement: <div style={{ height: '100%' }} />,
   }),
   withScriptjs,
   withGoogleMap,
