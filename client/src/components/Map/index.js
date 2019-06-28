@@ -12,42 +12,16 @@ import './style.css';
 import { Modal, Form, Button, Row, Col } from 'react-bootstrap';
 
 export class MapContainer extends Component {
+
+  // shouldn't set markers like this but fuck it for now
   state = {
     activeMarker: {},
     selectedPlace: {},
     showingInfoWindow: false,
-    markers: [],
+    markers: JSON.parse(this.props.locations),
     show: false,
     tag: '',
   };
-
-  // getData = () => {
-  //   var request = require("request");
-
-  //   var options = {
-  //     method: "GET",
-  //     url: "http://localhost:3000/api/location/locations",
-  //     headers: {
-  //       "cache-control": "no-cache",
-  //       Connection: "keep-alive",
-  //       "accept-encoding": "gzip, deflate",
-  //       Host: "localhost:3000",
-  //       "Postman-Token":
-  //         "4b5beafa-b5bc-4793-a566-b92fd9c80b3f,746e29c4-8563-4b1a-85cf-1be2f664c198",
-  //       "Cache-Control": "no-cache",
-  //       Accept: "*/*",
-  //       "User-Agent": "PostmanRuntime/7.13.0",
-  //     },
-  //   };
-
-  //   request(options, function(error, response, body) {
-  //     if (error) {
-  //       throw new Error(error);
-  //     }
-
-  //     // console.log(body);
-  //   });
-  // };
 
   postData = (latitude, longitude, tag, markers) => {
     var request = require('request');
@@ -75,18 +49,12 @@ export class MapContainer extends Component {
       },
     };
 
-    request(options, function(error, response, body) {
+    request(options, (error, response, body) => {
       if (error) {
         throw new Error(error);
       }
-      console.log('hey');
-      // this.setState({
-      //   markers: [
-      //     body[0],
-      //     ...this.state.markers,
-      //   ],
-      // });
-      console.log(body);
+
+      this.setState({ markers: [...this.state.markers, body] });
     });
   };
 
@@ -121,16 +89,16 @@ export class MapContainer extends Component {
       if (error) {
         throw new Error(error);
       }
-    
+
       console.log(body);
     });
   };
 
   onMarkerClick = (props, marker, e) => {
+    console.log('this is on Map/index.js: ' + props);
     // console.log('props = ', props);
     let latitude = props.latLng.lat();
     let longitude = props.latLng.lng();
-    console.log(longitude, latitude);
     this.handleShow();
     this.setState({
       latitude: latitude,
@@ -153,15 +121,15 @@ export class MapContainer extends Component {
     let latitude = event.latLng.lat();
     let longitude = event.latLng.lng();
 
-    this.setState({
-      markers: [
-        {
-          lat: latitude,
-          lng: longitude, 
-        },
-        ...this.state.markers,
-      ],
-    });
+    // this.setState({
+    //   markers: [
+    //     {
+    //       lat: latitude,
+    //       lng: longitude, 
+    //     },
+    //     ...this.state.markers,
+    //   ],
+    // });
     this.postData(latitude, longitude);
   };
 
@@ -171,8 +139,8 @@ export class MapContainer extends Component {
         <Marker
           key={i}
           position={{
-            lat: marker.lat,
-            lng: marker.lng,
+            lat: parseFloat(marker.latitude),
+            lng: parseFloat(marker.longitude),
           }}
           onClick={this.onMarkerClick}
         />
