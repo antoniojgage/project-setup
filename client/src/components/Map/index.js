@@ -49,7 +49,7 @@ export class MapContainer extends Component {
   //   });
   // };
 
-  postData = (latitude, longitude, tag) => {
+  postData = (latitude, longitude, tag, markers) => {
     var request = require('request');
 
     var options = {
@@ -80,8 +80,13 @@ export class MapContainer extends Component {
         throw new Error(error);
       }
       console.log('hey');
-
-      // console.log(body);
+      // this.setState({
+      //   markers: [
+      //     body[0],
+      //     ...this.state.markers,
+      //   ],
+      // });
+      console.log(body);
     });
   };
 
@@ -116,7 +121,7 @@ export class MapContainer extends Component {
       if (error) {
         throw new Error(error);
       }
-
+    
       console.log(body);
     });
   };

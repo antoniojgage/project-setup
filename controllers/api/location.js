@@ -10,7 +10,19 @@ router.get('/locations', function(req, res) {
   //do things here for other routes
 });
 
-// and this is for creating? and yes
+router.post('/tags', function(req, res) {
+  console.log('Tag');
+  //connected to the db haters
+  db.Location.findAll({
+    where: {
+      tags: req.body.tags,
+    },
+  }).then(function(results) {
+    res.json(results);
+  });
+});
+
+// and this is for creat})ing? and yes
 router.post('/locations', function(req, res) {
   console.log('Sup2');
   console.log(req.body);
@@ -57,19 +69,6 @@ router.put('/locations', function(req, res) {
       console.log('we are not finding any location');
     }
   });
-
-  // db.Location.update(
-  //   {
-  //     tag: req.body.tag,
-  //   },
-  //   {
-  //     where: {
-  //       latitude: req.body.latitude,
-  //       longitude: req.body.longitude,
-  //     },
-  //   }).then(function(results) {
-  //   res.send(results);
-  // });
 });
 
 module.exports = router;
