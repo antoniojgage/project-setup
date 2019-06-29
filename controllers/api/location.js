@@ -3,11 +3,16 @@ var db = require('../../models');
 // get route -> index
 router.get('/locations', function(req, res) {
   console.log('Get route hit /locations');
-  //connected to the db haters
-  db.Location.findAll({}).then(results => {
-    res.send(results);
-  });
-  //do things here for other routes
+  //connected
+  if (req.body.latitude) {
+    db.Location.findAll({}).then(results => {
+      res.send(results);
+    });
+  } else {
+    db.Location.findAll({}).then(results => {
+      res.send(results);
+    });
+  }
 });
 
 router.post('/tags', function(req, res) {

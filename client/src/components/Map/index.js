@@ -22,6 +22,30 @@ export class MapContainer extends Component {
   };
 
   putData = async () => {
+    if (this.state.tag) {
+      let getData = await axios
+        .put(`${process.env.REACT_APP_URL}/api/location/locations`, {
+          latitude: this.state.latitude,
+          longitude: this.state.longitude,
+          tag: this.state.tag,
+        })
+        .then(response => response.data)
+        .catch(error => console.log(error));
+
+      console.log('Put Data method called', getData);
+      this.setState({
+        tag: '',
+      });
+    }
+
+    console.log('A tag must be set');
+  };
+
+  onMarkerClick = async event => {
+    // console.log('props = ', props);
+    let latitude = event.latLng.lat();
+    let longitude = event.latLng.lng();
+
     let getData = await axios
       .put(`${process.env.REACT_APP_URL}/api/location/locations`, {
         latitude: this.state.latitude,
@@ -30,25 +54,8 @@ export class MapContainer extends Component {
       })
       .then(response => response.data)
       .catch(error => console.log(error));
-
-    console.log('Put Data method called');
-    this.setState({
-      // markers: [...this.props.markers, getData],
-      tag: '',
-    });
-  };
-
-  onMarkerClick = event => {
-    // console.log('props = ', props);
-    let latitude = event.latLng.lat();
-    let longitude = event.latLng.lng();
     this.handleShow();
-    this.setState({
-      latitude: latitude,
-      longitude: longitude,
-    });
-    //show an input or modal wherever on the page, we can make it pretty later
-    // from that input console log what the user typed here.
+    console.log('you clicked marker at', latitude, longitude);
   };
 
   onClose = props => {
@@ -59,6 +66,9 @@ export class MapContainer extends Component {
         tag: '',
       });
     }
+    this.setState({
+      tag: '',
+    });
   };
 
   renderMarkers = locations =>
@@ -74,8 +84,8 @@ export class MapContainer extends Component {
     ));
 
   handleClose = () => {
-    this.setState({ show: false });
     this.putData(this.state.tag);
+    this.setState({ show: false, tag: '' });
   };
 
   handleShow = () => {
