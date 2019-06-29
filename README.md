@@ -32,7 +32,7 @@ Users can search stored location.
  
  
  
- ![image](https://user-images.githubusercontent.com/47580937/60385411-7f935780-9a4e-11e9-9aa9-086b582684c1.png)
+https://files.slack.com/files-pri/TG9CXTB24-FKTT5NQ8H/localhost_3000_.png
 
  
  
@@ -72,21 +72,7 @@ Users can search stored location.
 
 
 
- 
- * If searching a entry point user will get Autocomplete suggestions
- 
- 
- 
- 
- 
- 
- 
- 
-  ![node2](https://user-images.githubusercontent.com/47580937/57411263-a651b200-71b2-11e9-8ffb-b93df915fbbe.jpeg)
- 
- 
- 
- 
+
  
  
  
@@ -104,7 +90,7 @@ Users can search stored location.
  
  
  
- ![node3](https://user-images.githubusercontent.com/47580937/57411376-03e5fe80-71b3-11e9-8ea1-c88a4840ec6e.jpeg)
+https://files.slack.com/files-pri/TG9CXTB24-FKZPMBJCU/screen_shot_2019-06-29_at_10.08.31_am.png
 
  
  
