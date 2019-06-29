@@ -9,69 +9,39 @@ import {
 import './style.css';
 import { Modal, Button } from 'react-bootstrap';
 const axios = require('axios');
+
 export class MapContainer extends Component {
   // shouldn't set markers like this but fuck it for now
   state = {
     activeMarker: {},
     selectedPlace: {},
     showingInfoWindow: false,
-    markers: [],
     show: false,
     tag: '',
     renderMarkers: 0,
   };
 
-  componentDidMount() {
-    // console.log('locations = ', this.props.locations);
-    // let locations = this.props.locations;
-    // // let locations = JSON.parse(this.props.locations);
-    // this.setState({ markers: locations });
-  }
-  postData = async (latitude, longitude, tag, markers) => {
-    let getData = await axios
-      .get(`${process.env.REACT_APP_URL}/api/location/locations`, {
-        latitude: latitude,
-        longitude: longitude,
-        tag: tag,
-      })
-      .then(function(response) {
-        console.log(response.data);
-      })
-      .catch(function(error) {
-        console.log(error);
-      });
-    this.setState({
-      markers: [...this.state.markers, getData],
-      renderMarkers: this.state.renderMarkers + 1,
-    });
-    console.log(this.state.markers);
-  };
-
   putData = async () => {
     let getData = await axios
-      .get(`${process.env.REACT_APP_URL}/api/location/locations`, {
+      .put(`${process.env.REACT_APP_URL}/api/location/locations`, {
         latitude: this.state.latitude,
         longitude: this.state.longitude,
         tag: this.state.tag,
       })
-      .then(function(response) {
-        console.log(response.data);
-      })
-      .catch(function(error) {
-        console.log(error);
-      });
+      .then(response => response.data)
+      .catch(error => console.log(error));
+
+    console.log('Put Data method called');
     this.setState({
-      markers: [...this.state.markers, getData],
-      renderMarkers: this.state.renderMarkers + 1,
+      // markers: [...this.props.markers, getData],
+      tag: '',
     });
-    console.log(this.state.markers);
   };
 
-  onMarkerClick = (props, marker, e) => {
-    console.log('this is on Map/index.js: ' + props);
+  onMarkerClick = event => {
     // console.log('props = ', props);
-    let latitude = props.latLng.lat();
-    let longitude = props.latLng.lng();
+    let latitude = event.latLng.lat();
+    let longitude = event.latLng.lng();
     this.handleShow();
     this.setState({
       latitude: latitude,
@@ -86,30 +56,13 @@ export class MapContainer extends Component {
       this.setState({
         showingInfoWindow: false,
         activeMarker: null,
+        tag: '',
       });
     }
   };
 
-  onMapClicked = (event, location, map) => {
-    let latitude = event.latLng.lat();
-    let longitude = event.latLng.lng();
-
-    // this.setState({
-    //   markers: [
-    //     {
-    //       lat: latitude,
-    //       lng: longitude,
-    //     },
-    //     ...this.state.markers,
-    //   ],
-    // });
-    console.log('map was clicked', latitude, longitude);
-    this.postData(latitude, longitude);
-  };
-
-  renderMarkers = locations => {
-    console.log(locations);
-    return locations.map((marker, i) => (
+  renderMarkers = locations =>
+    locations.map((marker, i) => (
       <Marker
         key={i}
         position={{
@@ -119,11 +72,9 @@ export class MapContainer extends Component {
         onClick={this.onMarkerClick}
       />
     ));
-  };
 
   handleClose = () => {
     this.setState({ show: false });
-    console.log(this.state.tag);
     this.putData(this.state.tag);
   };
 
@@ -142,11 +93,10 @@ export class MapContainer extends Component {
   };
 
   render() {
-    let { locations } = this.props;
-    console.log(this.props);
+    let { locations, onMapClicked } = this.props;
     return (
       <GoogleMap
-        onClick={this.onMapClicked}
+        onClick={onMapClicked}
         defaultZoom={12}
         defaultCenter={{ lat: 30.2672, lng: -97.7431 }}
       >

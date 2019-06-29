@@ -23,12 +23,8 @@ export class App extends Component {
       .get(`${process.env.REACT_APP_URL}/api/location/tags`, {
         body: tag,
       })
-      .then(function(response) {
-        console.log(response.data);
-      })
-      .catch(function(error) {
-        console.log(error);
-      });
+      .then(response => response)
+      .catch(error => console.log(error));
     console.log('get data = ', getData);
 
     this.setState({ locations: getData });
@@ -42,12 +38,33 @@ export class App extends Component {
     this.searchByTag(val);
   };
 
+  onMapClicked = async event => {
+    let latitude = event.latLng.lat();
+    let longitude = event.latLng.lng();
+    console.log('map was clicked at', latitude, longitude);
+
+    let getData = await axios
+      .post(`${process.env.REACT_APP_URL}/api/location/locations`, {
+        latitude: latitude,
+        longitude: longitude,
+      })
+      .then(response => response.data)
+      .catch(error => console.log(error));
+
+    console.log(getData, ' = singleRecord');
+    this.setState({
+      locations: [...this.state.locations, getData],
+    });
+  };
+
   render() {
-    // SEE HERE - I AM GIVING THE STATE FOR THESE COMPONENTS TO NOW USE
     return (
       <div>
         <Header />
-        <Map locations={this.state.locations} />
+        <Map
+          locations={this.state.locations}
+          onMapClicked={this.onMapClicked}
+        />
         <Search
           onSearchSelection={this.onSearchSelection}
           locations={this.state.locations}
