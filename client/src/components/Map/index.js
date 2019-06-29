@@ -22,7 +22,6 @@ export class MapContainer extends Component {
 
   componentDidMount() {
     let locations = JSON.parse(this.props.locations);
-    console.log(locations);
     this.setState({ markers: locations });
   }
   postData = (latitude, longitude, tag, markers) => {
@@ -138,7 +137,7 @@ export class MapContainer extends Component {
   renderMarkers = () => {
     let { markers } = this.state;
 
-    console.log('locations=', markers);
+    // console.log('locations=', markers);
     // Array.from(locations)
     // console.log(Array.isArray(locations));
     // locations = Array.isArray(locations) ? locations : [];
