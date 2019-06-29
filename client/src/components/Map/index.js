@@ -21,30 +21,32 @@ export class MapContainer extends Component {
     renderMarkers: 0,
   };
 
-  putData = async () => {};
-
   onMarkerClick = async event => {
     // console.log('props = ', props);
     let latitude = event.latLng.lat();
     let longitude = event.latLng.lng();
     console.log('you clicked marker at', latitude, longitude);
-    // this.setState({ latitude, longitude });
 
     let getData = await axios
       .get(`${process.env.REACT_APP_URL}/api/location/locations`, {
         params: {
-          latitude,
-          longitude,
+          name: 'Flavio',
         },
       })
-      .then(response => response.data)
-      .catch(error => console.log(error));
+      .then(response => response);
 
-    console.log(getData);
+    // let getData = await axios
+    //   .get(`${process.env.REACT_APP_URL}/api/location/locations`, {
+    //     latitude,
+    //     longitude,
+    //   })
+    //   .then(response => response.data)
+    //   .catch(error => console.log(error));
+    console.log(getData.data);
+    this.setState({ latitude, longitude });
+
     this.handleShow();
   };
-
-  onClose = () => {};
 
   renderMarkers = locations =>
     locations.map((marker, i) => (
@@ -71,7 +73,10 @@ export class MapContainer extends Component {
 
     console.log('Put Data method called', getData);
     this.setState({
+      activeMarker: null,
+      showingInfoWindow: false,
       tag: '',
+      show: false,
     });
   };
 

@@ -11,11 +11,9 @@ export default class Search extends React.Component {
     text: '',
   };
 
-  onTextChanged = (e, data) => {
+  onTextChanged = (event, data) => {
     console.log('data = ' + data);
-    console.log('e = ' + e);
-    data = Array.isArray(data) ? data : [];
-    console.log(Array.isArray(data));
+
     // data is not an array here then - try doing data.locations
     let items = data.map(location => {
       if (!location.tag) {
@@ -23,7 +21,7 @@ export default class Search extends React.Component {
       }
       return location.tag;
     });
-    const value = e.target.value;
+    const value = event.target.value;
     console.log(items);
     let suggestions = [];
     if (value.length > 0) {
