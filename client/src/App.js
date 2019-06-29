@@ -16,15 +16,18 @@ export class App extends Component {
 
     var options = {
       method: 'GET',
+
       url: `${process.env.URL}/api/location/locations`,
       headers: {
         'cache-control': 'no-cache',
         Connection: 'keep-alive',
         'accept-encoding': 'gzip, deflate',
+
         Host: `${process.env.URL}`,
         'Postman-Token':
           '4b5beafa-b5bc-4793-a566-b92fd9c80b3f,746e29c4-8563-4b1a-85cf-1be2f664c198',
         'Cache-Control': 'no-cache',
+
         Accept: '*/*',
         'User-Agent': 'PostmanRuntime/7.13.0',
       },
@@ -47,6 +50,7 @@ export class App extends Component {
 
     var options = {
       method: 'POST',
+
       url: `${process.env.URL}/api/location/tags`,
       headers: {
         'cache-control': 'no-cache',

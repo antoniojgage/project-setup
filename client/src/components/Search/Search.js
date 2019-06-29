@@ -74,10 +74,6 @@ export default class Search extends React.Component {
                   this.onTextChanged(event, this.props.locations)
                 }
               />
-
-              <Form.Text className="text-muted">
-                Write something here.
-              </Form.Text>
               {this.renderSuggestions()}
             </Form>
           </Col>

@@ -179,7 +179,7 @@ export class MapContainer extends Component {
 
         <Modal show={this.state.show} onHide={this.handleShow}>
           <Modal.Header>
-            <Modal.Title>Modal heading</Modal.Title>
+            <Modal.Title>Add a tag</Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <form>
