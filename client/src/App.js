@@ -84,12 +84,19 @@ export class App extends Component {
     this.searchByTag(val);
   };
 
+  newMarker = () => {
+    this.setState({ newMarker: this.state.marker + 1 });
+  };
+
   render() {
     // SEE HERE - I AM GIVING THE STATE FOR THESE COMPONENTS TO NOW USE
     return (
       <div>
         <Header />
-        <Map locations={this.state.locations} />
+        <Map
+          locations={this.state.locations}
+          newMarker={this.newMarker}
+        />
         <Search
           onSearchSelection={this.onSearchSelection}
           locations={this.state.locations}

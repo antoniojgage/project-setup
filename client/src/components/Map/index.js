@@ -22,6 +22,7 @@ export class MapContainer extends Component {
 
   componentDidMount() {
     let locations = JSON.parse(this.props.locations);
+    // let locations = JSON.stringify(this.props.locations);
     this.setState({ markers: locations });
   }
   postData = (latitude, longitude, tag, markers) => {
