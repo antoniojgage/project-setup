@@ -12,7 +12,6 @@ import './style.css';
 import { Modal, Form, Button, Row, Col } from 'react-bootstrap';
 
 export class MapContainer extends Component {
-
   // shouldn't set markers like this but fuck it for now
   state = {
     activeMarker: {},
@@ -28,16 +27,16 @@ export class MapContainer extends Component {
 
     var options = {
       method: 'POST',
-      url: '/api/location/locations',
+      url: `${process.env.REACT_APP_URL}/api/location/locations`,
       headers: {
         'cache-control': 'no-cache',
         Connection: 'keep-alive',
         'content-length': '45',
         'accept-encoding': 'gzip, deflate',
-        // Host: 'localhost:3000',
-        // 'Postman-Token':
-        //   '30b42cd3-c9fa-4608-84f1-9172d36f289a,44a0bfed-13a2-44f9-a048-ea33f8ea7284',
-        // 'Cache-Control': 'no-cache',
+        Host: `${process.env.REACT_APP_URL}`,
+        'Postman-Token':
+          '30b42cd3-c9fa-4608-84f1-9172d36f289a,44a0bfed-13a2-44f9-a048-ea33f8ea7284',
+        'Cache-Control': 'no-cache',
         Accept: '*/*',
         'User-Agent': 'PostmanRuntime/7.13.0',
         'Content-Type': 'application/x-www-form-urlencoded',
@@ -63,16 +62,16 @@ export class MapContainer extends Component {
 
     var options = {
       method: 'PUT',
-      url: '/api/location/locations',
+      url: `${process.env.REACT_APP_URL}/api/location/locations`,
       headers: {
         'cache-control': 'no-cache',
         Connection: 'keep-alive',
         'content-length': '11',
         'accept-encoding': 'gzip, deflate',
-        // Host: 'localhost:3000',
-        // 'Postman-Token':
-        //   '032c3c6c-91a1-4718-81cf-e98449d1647a,4ede4ae6-d272-477c-93d2-7fea8b744d47',
-        // 'Cache-Control': 'no-cache',
+        Host: `${process.env.REACT_APP_URL}`,
+        'Postman-Token':
+          '032c3c6c-91a1-4718-81cf-e98449d1647a,4ede4ae6-d272-477c-93d2-7fea8b744d47',
+        'Cache-Control': 'no-cache',
         Accept: '*/*',
         'User-Agent': 'PostmanRuntime/7.15.0',
         'Content-Type': 'application/x-www-form-urlencoded',
@@ -125,7 +124,7 @@ export class MapContainer extends Component {
     //   markers: [
     //     {
     //       lat: latitude,
-    //       lng: longitude, 
+    //       lng: longitude,
     //     },
     //     ...this.state.markers,
     //   ],
