@@ -18,12 +18,14 @@ export class MapContainer extends Component {
     markers: [],
     show: false,
     tag: '',
+    renderMarkers: 0,
   };
 
   componentDidMount() {
-    let locations = JSON.parse(this.props.locations);
-    // let locations = JSON.stringify(this.props.locations);
-    this.setState({ markers: locations });
+    // console.log('locations = ', this.props.locations);
+    // let locations = this.props.locations;
+    // // let locations = JSON.parse(this.props.locations);
+    // this.setState({ markers: locations });
   }
   postData = (latitude, longitude, tag, markers) => {
     var request = require('request');
@@ -55,8 +57,11 @@ export class MapContainer extends Component {
       if (error) {
         throw new Error(error);
       }
-      // console.log(body);
-      this.setState({ markers: [...this.state.markers, body] });
+      this.setState({
+        markers: [...this.state.markers, body],
+        renderMarkers: this.state.renderMarkers + 1,
+      });
+      console.log(this.state.markers);
     });
   };
 
@@ -91,7 +96,7 @@ export class MapContainer extends Component {
       if (error) {
         throw new Error(error);
       }
-
+      this.props.newMarker();
       console.log(body);
     });
   };
@@ -132,18 +137,14 @@ export class MapContainer extends Component {
     //     ...this.state.markers,
     //   ],
     // });
+    console.log('map was clicked', latitude, longitude);
+    this.props.newMarker();
     this.postData(latitude, longitude);
   };
 
-  renderMarkers = () => {
-    let { markers } = this.state;
-
-    // console.log('locations=', markers);
-    // Array.from(locations)
-    // console.log(Array.isArray(locations));
-    // locations = Array.isArray(locations) ? locations : [];
-    // console.log('locations=', locations);
-    return markers.map((marker, i) => (
+  renderMarkers = locations => {
+    console.log(locations);
+    return locations.map((marker, i) => (
       <Marker
         key={i}
         position={{
@@ -176,13 +177,14 @@ export class MapContainer extends Component {
   };
 
   render() {
+    let { locations } = this.props;
     return (
       <GoogleMap
         onClick={this.onMapClicked}
         defaultZoom={12}
         defaultCenter={{ lat: 30.2672, lng: -97.7431 }}
       >
-        {this.renderMarkers()}
+        {this.renderMarkers(locations)}
         <Modal show={this.state.show} onHide={this.handleShow}>
           <Modal.Header>
             <Modal.Title>Add a tag</Modal.Title>

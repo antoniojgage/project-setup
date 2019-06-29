@@ -5,7 +5,7 @@ router.get('/locations', function(req, res) {
   console.log('Sup');
   //connected to the db haters
   db.Location.findAll({}).then(function(results) {
-    res.json(results);
+    res.send(results);
   });
   //do things here for other routes
 });
@@ -18,7 +18,7 @@ router.post('/tags', function(req, res) {
       tags: req.body.tags,
     },
   }).then(function(results) {
-    res.json(results);
+    res.send(results);
   });
 });
 

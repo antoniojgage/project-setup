@@ -3,43 +3,24 @@ import Header from './components/Header/Header';
 import Map from './components/Map';
 import Search from './components/Search/Search';
 import Footer from './components/Footer/Footer';
+const axios = require('axios');
 export class App extends Component {
   state = {
     locations: [],
     selection: '',
   };
 
-  componentDidMount = () => {
-    var that = this;
-    var request = require('request');
-
-    var options = {
-      method: 'GET',
-      url: `${process.env.REACT_APP_URL}/api/location/locations`,
-      headers: {
-        'cache-control': 'no-cache',
-        Connection: 'keep-alive',
-        'accept-encoding': 'gzip, deflate',
-        Host: `${process.env.REACT_APP_URL}`,
-        'Postman-Token':
-          '4b5beafa-b5bc-4793-a566-b92fd9c80b3f,746e29c4-8563-4b1a-85cf-1be2f664c198',
-        'Cache-Control': 'no-cache',
-
-        Accept: '*/*',
-        'User-Agent': 'PostmanRuntime/7.13.0',
-      },
-    };
-
-    request(options, function(error, response, body) {
-      if (error) {
-        throw new Error(error);
-      }
-      // console.log('Setting locations to:', body);
-
-      // SEE HERE - I AM SETTING THE STATE OF THE COMPONENT
-      that.setState({ locations: body });
-    });
-  };
+  async componentDidMount() {
+    let getData = await axios
+      .get(`${process.env.REACT_APP_URL}/api/location/locations`)
+      .then(function(response) {
+        console.log(response.data);
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
+    this.setState({ locations: getData });
+  }
 
   searchByTag = tag => {
     var that = this;
@@ -85,6 +66,7 @@ export class App extends Component {
   };
 
   newMarker = () => {
+    console.log('new marker called');
     this.setState({ newMarker: this.state.marker + 1 });
   };
 
