@@ -4,12 +4,10 @@ import {
   withScriptjs,
   withGoogleMap,
   GoogleMap,
-  MarkerClusterer,
   Marker,
-  InfoWindow,
 } from 'react-google-maps';
 import './style.css';
-import { Modal, Form, Button, Row, Col } from 'react-bootstrap';
+import { Modal, Button } from 'react-bootstrap';
 
 export class MapContainer extends Component {
   // shouldn't set markers like this but fuck it for now
@@ -167,11 +165,11 @@ export class MapContainer extends Component {
   };
 
   render() {
-    // this.getData();
-    // this.postData();
-    let markers = this.props.locations
-      ? JSON.parse(this.props.locations)
-      : {};
+    console.log(this.props.locations);
+    let markers =
+      this.props.locations.length > 0
+        ? JSON.parse(this.props.locations)
+        : [];
     return (
       <GoogleMap
         onClick={this.onMapClicked}
