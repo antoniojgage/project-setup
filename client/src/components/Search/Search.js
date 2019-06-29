@@ -14,9 +14,10 @@ export default class Search extends React.Component {
   onTextChanged = (e, data) => {
     console.log('data = ' + data);
     console.log('e = ' + e);
-
+    data = Array.isArray(data) ? data : [];
+    console.log(Array.isArray(data));
     // data is not an array here then - try doing data.locations
-    let items = JSON.parse(data).map(location => {
+    let items = data.map(location => {
       if (!location.tag) {
         location.tag = '';
       }

@@ -34,7 +34,7 @@ export class App extends Component {
       if (error) {
         throw new Error(error);
       }
-      // console.log(body);
+      // console.log('Setting locations to:', body);
 
       // SEE HERE - I AM SETTING THE STATE OF THE COMPONENT
       that.setState({ locations: body });

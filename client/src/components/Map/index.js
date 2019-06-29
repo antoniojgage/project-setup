@@ -15,11 +15,16 @@ export class MapContainer extends Component {
     activeMarker: {},
     selectedPlace: {},
     showingInfoWindow: false,
-    markers: {},
+    markers: [],
     show: false,
     tag: '',
   };
 
+  componentDidMount() {
+    let locations = JSON.parse(this.props.locations);
+    console.log(locations);
+    this.setState({ markers: locations });
+  }
   postData = (latitude, longitude, tag, markers) => {
     var request = require('request');
 
@@ -50,7 +55,7 @@ export class MapContainer extends Component {
       if (error) {
         throw new Error(error);
       }
-
+      // console.log(body);
       this.setState({ markers: [...this.state.markers, body] });
     });
   };
@@ -130,19 +135,25 @@ export class MapContainer extends Component {
     this.postData(latitude, longitude);
   };
 
-  renderMarkers = markers =>
-    markers.map((marker, i) => {
-      return (
-        <Marker
-          key={i}
-          position={{
-            lat: parseFloat(marker.latitude),
-            lng: parseFloat(marker.longitude),
-          }}
-          onClick={this.onMarkerClick}
-        />
-      );
-    });
+  renderMarkers = () => {
+    let { markers } = this.state;
+
+    console.log('locations=', markers);
+    // Array.from(locations)
+    // console.log(Array.isArray(locations));
+    // locations = Array.isArray(locations) ? locations : [];
+    // console.log('locations=', locations);
+    return markers.map((marker, i) => (
+      <Marker
+        key={i}
+        position={{
+          lat: parseFloat(marker.latitude),
+          lng: parseFloat(marker.longitude),
+        }}
+        onClick={this.onMarkerClick}
+      />
+    ));
+  };
 
   handleClose = () => {
     this.setState({ show: false });
@@ -165,19 +176,13 @@ export class MapContainer extends Component {
   };
 
   render() {
-    console.log(this.props.locations);
-    let markers =
-      this.props.locations.length > 0
-        ? JSON.parse(this.props.locations)
-        : [];
     return (
       <GoogleMap
         onClick={this.onMapClicked}
         defaultZoom={12}
         defaultCenter={{ lat: 30.2672, lng: -97.7431 }}
       >
-        {this.renderMarkers(markers)}
-
+        {this.renderMarkers()}
         <Modal show={this.state.show} onHide={this.handleShow}>
           <Modal.Header>
             <Modal.Title>Add a tag</Modal.Title>
