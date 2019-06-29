@@ -61,7 +61,8 @@ Users can search stored location.
  
  
  
- ![image](https://user-images.githubusercontent.com/47580937/60385411-7f935780-9a4e-11e9-9aa9-086b582684c1.png)
+![image](https://user-images.githubusercontent.com/47580937/60385500-7a82d800-9a4f-11e9-8b7e-0cea944492a8.png)
+
 
   
   
