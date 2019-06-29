@@ -28,7 +28,7 @@ export class MapContainer extends Component {
     console.log('you clicked marker at', latitude, longitude);
 
     let getData = await axios
-      .get(`${process.env.REACT_APP_URL}/api/location/locations`, {
+      .get(`/api/location/locations`, {
         params: {
           name: 'Flavio',
         },
@@ -36,7 +36,7 @@ export class MapContainer extends Component {
       .then(response => response);
 
     // let getData = await axios
-    //   .get(`${process.env.REACT_APP_URL}/api/location/locations`, {
+    //   .get(`/api/location/locations`, {
     //     latitude,
     //     longitude,
     //   })
@@ -63,7 +63,7 @@ export class MapContainer extends Component {
   handleSubmit = async () => {
     console.log('Handle submit executed');
     let getData = await axios
-      .put(`${process.env.REACT_APP_URL}/api/location/locations`, {
+      .put(`/api/location/locations`, {
         latitude: this.state.latitude,
         longitude: this.state.longitude,
         tag: this.state.tag,

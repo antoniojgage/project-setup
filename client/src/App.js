@@ -12,7 +12,7 @@ export class App extends Component {
 
   async componentDidMount() {
     let getData = await axios
-      .get(`${process.env.REACT_APP_URL}/api/location/locations`)
+      .get(`/api/location/locations`)
       .then(response => response)
       .catch(error => console.log(error));
     this.setState({ locations: getData.data });
@@ -20,7 +20,7 @@ export class App extends Component {
 
   searchByTag = async tag => {
     let getData = await axios
-      .get(`${process.env.REACT_APP_URL}/api/location/tags`, {
+      .get(`/api/location/tags`, {
         body: tag,
       })
       .then(response => response)
@@ -44,7 +44,7 @@ export class App extends Component {
     console.log('map was clicked at', latitude, longitude);
 
     let getData = await axios
-      .post(`${process.env.REACT_APP_URL}/api/location/locations`, {
+      .post(`/api/location/locations`, {
         latitude: latitude,
         longitude: longitude,
       })
