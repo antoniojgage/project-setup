@@ -8,7 +8,7 @@ import {
 } from 'react-google-maps';
 import './style.css';
 import { Modal, Button } from 'react-bootstrap';
-
+const axios = require('axios');
 export class MapContainer extends Component {
   // shouldn't set markers like this but fuck it for now
   state = {
@@ -27,78 +27,45 @@ export class MapContainer extends Component {
     // // let locations = JSON.parse(this.props.locations);
     // this.setState({ markers: locations });
   }
-  postData = (latitude, longitude, tag, markers) => {
-    var request = require('request');
-
-    var options = {
-      method: 'POST',
-      url: `${process.env.REACT_APP_URL}/api/location/locations`,
-      headers: {
-        'cache-control': 'no-cache',
-        Connection: 'keep-alive',
-        'content-length': '45',
-        'accept-encoding': 'gzip, deflate',
-        Host: `${process.env.REACT_APP_URL}`,
-        'Postman-Token':
-          '30b42cd3-c9fa-4608-84f1-9172d36f289a,44a0bfed-13a2-44f9-a048-ea33f8ea7284',
-        'Cache-Control': 'no-cache',
-        Accept: '*/*',
-        'User-Agent': 'PostmanRuntime/7.13.0',
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      form: {
+  postData = async (latitude, longitude, tag, markers) => {
+    let getData = await axios
+      .get(`${process.env.REACT_APP_URL}/api/location/locations`, {
         latitude: latitude,
         longitude: longitude,
         tag: tag,
-      },
-    };
-
-    request(options, (error, response, body) => {
-      if (error) {
-        throw new Error(error);
-      }
-      this.setState({
-        markers: [...this.state.markers, body],
-        renderMarkers: this.state.renderMarkers + 1,
+      })
+      .then(function(response) {
+        console.log(response.data);
+      })
+      .catch(function(error) {
+        console.log(error);
       });
-      console.log(this.state.markers);
+    this.setState({
+      markers: [...this.state.markers, getData],
+      renderMarkers: this.state.renderMarkers + 1,
     });
+    console.log(this.state.markers);
   };
 
-  putData = () => {
-    var request = require('request');
-
-    var options = {
-      method: 'PUT',
-      url: `${process.env.REACT_APP_URL}/api/location/locations`,
-      headers: {
-        'cache-control': 'no-cache',
-        Connection: 'keep-alive',
-        'content-length': '11',
-        'accept-encoding': 'gzip, deflate',
-        Host: `${process.env.REACT_APP_URL}`,
-        'Postman-Token':
-          '032c3c6c-91a1-4718-81cf-e98449d1647a,4ede4ae6-d272-477c-93d2-7fea8b744d47',
-        'Cache-Control': 'no-cache',
-        Accept: '*/*',
-        'User-Agent': 'PostmanRuntime/7.15.0',
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-
-      form: {
+  putData = async () => {
+    let getData = await axios
+      .get(`${process.env.REACT_APP_URL}/api/location/locations`, {
         latitude: this.state.latitude,
         longitude: this.state.longitude,
         tag: this.state.tag,
-      },
-    };
-
-    request(options, function(error, response, body) {
-      if (error) {
-        throw new Error(error);
-      }
-      this.props.newMarker();
-      console.log(body);
+      })
+      .then(function(response) {
+        console.log(response.data);
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
+    this.setState({
+      markers: [...this.state.markers, getData],
+      renderMarkers: this.state.renderMarkers + 1,
     });
+    console.log(this.state.markers);
+    this.props.newMarker();
   };
 
   onMarkerClick = (props, marker, e) => {
@@ -178,6 +145,7 @@ export class MapContainer extends Component {
 
   render() {
     let { locations } = this.props;
+    console.log(this.props);
     return (
       <GoogleMap
         onClick={this.onMapClicked}
