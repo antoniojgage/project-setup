@@ -32,7 +32,7 @@ Users can search stored location.
  
  
  
-https://files.slack.com/files-pri/TG9CXTB24-FKTT5NQ8H/localhost_3000_.png
+![image](https://user-images.githubusercontent.com/47580937/60386059-30512500-9a56-11e9-8201-31d7206216a2.png)
 
  
  
@@ -90,7 +90,7 @@ https://files.slack.com/files-pri/TG9CXTB24-FKTT5NQ8H/localhost_3000_.png
  
  
  
-https://files.slack.com/files-pri/TG9CXTB24-FKZPMBJCU/screen_shot_2019-06-29_at_10.08.31_am.png
+![image](https://user-images.githubusercontent.com/47580937/60386072-5971b580-9a56-11e9-8dac-005d339e0d5d.png)
 
  
  
