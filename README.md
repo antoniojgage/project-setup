@@ -23,6 +23,27 @@ Users can search stored location.
  * Mark Greenbelt entry points 
  * Search stored Greenbelt Entry points
  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ ![image](https://user-images.githubusercontent.com/47580937/60385411-7f935780-9a4e-11e9-9aa9-086b582684c1.png)
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
 
  
  ### How to get started? ###
@@ -35,10 +56,17 @@ Users can search stored location.
  
  
  
+ 
+ 
+ 
+ 
+ 
  ![image](https://user-images.githubusercontent.com/47580937/60385411-7f935780-9a4e-11e9-9aa9-086b582684c1.png)
 
   
   
+  
+
 
 
 
