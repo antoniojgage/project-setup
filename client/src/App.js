@@ -24,6 +24,7 @@ export class App extends Component {
         'Postman-Token':
           '4b5beafa-b5bc-4793-a566-b92fd9c80b3f,746e29c4-8563-4b1a-85cf-1be2f664c198',
         'Cache-Control': 'no-cache',
+
         Accept: '*/*',
         'User-Agent': 'PostmanRuntime/7.13.0',
       },
