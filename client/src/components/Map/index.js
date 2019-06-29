@@ -17,7 +17,7 @@ export class MapContainer extends Component {
     activeMarker: {},
     selectedPlace: {},
     showingInfoWindow: false,
-    markers: JSON.parse(this.props.locations),
+    markers: {},
     show: false,
     tag: '',
   };
@@ -132,8 +132,8 @@ export class MapContainer extends Component {
     this.postData(latitude, longitude);
   };
 
-  renderMarkers = () =>
-    this.state.markers.map((marker, i) => {
+  renderMarkers = markers =>
+    markers.map((marker, i) => {
       return (
         <Marker
           key={i}
@@ -169,13 +169,16 @@ export class MapContainer extends Component {
   render() {
     // this.getData();
     // this.postData();
+    let markers = this.props.locations
+      ? JSON.parse(this.props.locations)
+      : {};
     return (
       <GoogleMap
         onClick={this.onMapClicked}
         defaultZoom={12}
         defaultCenter={{ lat: 30.2672, lng: -97.7431 }}
       >
-        {this.renderMarkers()}
+        {this.renderMarkers(markers)}
 
         <Modal show={this.state.show} onHide={this.handleShow}>
           <Modal.Header>
