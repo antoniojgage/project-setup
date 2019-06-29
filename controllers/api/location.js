@@ -2,10 +2,16 @@ const router = require('express').Router();
 var db = require('../../models');
 // get route -> index
 router.get('/locations', function(req, res) {
-  console.log('Get route hit /locations');
-  //connected
+  console.log('Get route hit /locations', req.body, req.params);
+
   if (req.body.latitude) {
-    db.Location.findAll({}).then(results => {
+    console.log('Latitude was found, running single get query');
+    db.Location.findAll({
+      where: {
+        latitude: req.body.latitude,
+        longitude: req.body.longitude,
+      },
+    }).then(results => {
       res.send(results);
     });
   } else {
@@ -52,10 +58,9 @@ router.post('/locations', (req, res) => {
 
 // so this is for updating? yes
 router.put('/locations', (req, res) => {
-  console.log('Put route hit with:', req.body);
+  console.log('Put route hit with:', req.body, req.params);
 
   var latitude = parseFloat(req.body.latitude).toFixed(5);
-  console.log(latitude);
   var longitude = parseFloat(req.body.longitude).toFixed(5);
   db.Location.findOne({
     where: { latitude: latitude, longitude: longitude },
@@ -65,7 +70,10 @@ router.put('/locations', (req, res) => {
         .update({
           tag: req.body.tag,
         })
-        .then(result => console.log('Successful update'))
+        .then(result => {
+          console.log('Successful update');
+          res.send(result);
+        })
         .catch(err => console.log('this failed to update'));
     } else {
       console.log('we are not finding any location');

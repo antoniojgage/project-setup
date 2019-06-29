@@ -21,55 +21,30 @@ export class MapContainer extends Component {
     renderMarkers: 0,
   };
 
-  putData = async () => {
-    if (this.state.tag) {
-      let getData = await axios
-        .put(`${process.env.REACT_APP_URL}/api/location/locations`, {
-          latitude: this.state.latitude,
-          longitude: this.state.longitude,
-          tag: this.state.tag,
-        })
-        .then(response => response.data)
-        .catch(error => console.log(error));
-
-      console.log('Put Data method called', getData);
-      this.setState({
-        tag: '',
-      });
-    }
-
-    console.log('A tag must be set');
-  };
+  putData = async () => {};
 
   onMarkerClick = async event => {
     // console.log('props = ', props);
     let latitude = event.latLng.lat();
     let longitude = event.latLng.lng();
+    console.log('you clicked marker at', latitude, longitude);
+    // this.setState({ latitude, longitude });
 
     let getData = await axios
-      .put(`${process.env.REACT_APP_URL}/api/location/locations`, {
-        latitude: this.state.latitude,
-        longitude: this.state.longitude,
-        tag: this.state.tag,
+      .get(`${process.env.REACT_APP_URL}/api/location/locations`, {
+        params: {
+          latitude,
+          longitude,
+        },
       })
       .then(response => response.data)
       .catch(error => console.log(error));
+
+    console.log(getData);
     this.handleShow();
-    console.log('you clicked marker at', latitude, longitude);
   };
 
-  onClose = props => {
-    if (this.state.showingInfoWindow) {
-      this.setState({
-        showingInfoWindow: false,
-        activeMarker: null,
-        tag: '',
-      });
-    }
-    this.setState({
-      tag: '',
-    });
-  };
+  onClose = () => {};
 
   renderMarkers = locations =>
     locations.map((marker, i) => (
@@ -83,8 +58,32 @@ export class MapContainer extends Component {
       />
     ));
 
+  handleSubmit = async () => {
+    console.log('Handle submit executed');
+    let getData = await axios
+      .put(`${process.env.REACT_APP_URL}/api/location/locations`, {
+        latitude: this.state.latitude,
+        longitude: this.state.longitude,
+        tag: this.state.tag,
+      })
+      .then(response => response.data)
+      .catch(error => console.log(error));
+
+    console.log('Put Data method called', getData);
+    this.setState({
+      tag: '',
+    });
+  };
+
   handleClose = () => {
-    this.putData(this.state.tag);
+    console.log('Executing on Close');
+    if (this.state.showingInfoWindow) {
+      this.setState({
+        showingInfoWindow: false,
+        activeMarker: null,
+        tag: '',
+      });
+    }
     this.setState({ show: false, tag: '' });
   };
 
@@ -133,7 +132,7 @@ export class MapContainer extends Component {
             <Button
               type="submit"
               variant="primary"
-              onClick={this.handleClose}
+              onClick={this.handleSubmit}
             >
               Save Changes
             </Button>
