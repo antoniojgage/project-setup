@@ -1,5 +1,20 @@
-# GREEN atx |  Project 2
+# GREEN ATX |  Project 2
 A React application  designed to pin and search local greenbelts in the Austing area
+
+
+## Technologies Used
+
+- [x] Front end: HTML5, CSS, Bootstrap, React, 
+
+- [x] Back end: Node, Express, MySQL
+
+
+## OVERVIEW
+
+APP was designed to pin and search local Greenbelt entrances in the Austin, Texas area. 
+Users can pin ENTRY POINTS with markers.
+Users can search stored location. 
+
 
 
 
