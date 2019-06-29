@@ -65,7 +65,6 @@ export class MapContainer extends Component {
       renderMarkers: this.state.renderMarkers + 1,
     });
     console.log(this.state.markers);
-    this.props.newMarker();
   };
 
   onMarkerClick = (props, marker, e) => {
@@ -105,7 +104,6 @@ export class MapContainer extends Component {
     //   ],
     // });
     console.log('map was clicked', latitude, longitude);
-    this.props.newMarker();
     this.postData(latitude, longitude);
   };
 
