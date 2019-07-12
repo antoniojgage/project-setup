@@ -2,5 +2,14 @@
     left:0;
     bottom:0;
     right:0;
-    background-color: whitesmoke;
+    background: 
+    url("./Assets/bartonHeader.jpeg");
+background-position: center;
+background-repeat: no-repeat;
+background-attachment: scroll;
+background-size: cover;
+}
+
+h1,h4,p {
+    color: white;
 }
