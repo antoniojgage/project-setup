@@ -28,22 +28,12 @@ export class MapContainer extends Component {
     console.log('you clicked marker at', latitude, longitude);
 
     let getData = await axios
-      .get(`/api/location/locations`, {
-        params: {
-          name: 'Flavio',
-        },
-      })
-      .then(response => response);
-
-    // let getData = await axios
-    //   .get(`/api/location/locations`, {
-    //     latitude,
-    //     longitude,
-    //   })
-    //   .then(response => response.data)
-    //   .catch(error => console.log(error));
-    console.log(getData.data);
-    this.setState({ latitude, longitude });
+      .get(`/api/location/locations/${latitude}/${longitude}`)
+      .then(response => response.data)
+      .catch(error => console.log(error));
+    // getdata.tag
+    console.log(getData);
+    this.setState({ latitude, longitude, });
 
     this.handleShow();
   };
@@ -67,6 +57,7 @@ export class MapContainer extends Component {
         latitude: this.state.latitude,
         longitude: this.state.longitude,
         tag: this.state.tag,
+        category: this.state.category,
       })
       .then(response => response.data)
       .catch(error => console.log(error));
@@ -99,7 +90,7 @@ export class MapContainer extends Component {
   handleInputChange = event => {
     // Getting the value and name of the input which triggered the change
     const { name, value } = event.target;
-
+    console.log(event.target, name, value);
     // Updating the input's state
     this.setState({
       [name]: value,
@@ -128,6 +119,52 @@ export class MapContainer extends Component {
                 type="text"
                 placeholder="Tag"
               />
+              {/* <input
+                value={this.state.category}
+                name="category"
+                onChange={this.handleInputChange}
+                type="radio"
+                placeholder="Category"
+              /> */}
+
+              <li>
+                <label>
+                  <input
+                    type="radio"
+                    name="category"
+                    value="small"
+                    checked={this.state.category === 'small'}
+                    onChange={this.handleInputChange}
+                  />
+                  Small
+                </label>
+              </li>
+
+              <li>
+                <label>
+                  <input
+                    type="radio"
+                    name="category"
+                    value="medium"
+                    checked={this.state.category === 'medium'}
+                    onChange={this.handleInputChange}
+                  />
+                  Medium
+                </label>
+              </li>
+
+              <li>
+                <label>
+                  <input
+                    type="radio"
+                    name="category"
+                    value="large"
+                    checked={this.state.category === 'large'}
+                    onChange={this.handleInputChange}
+                  />
+                  Large
+                </label>
+              </li>
             </form>
           </Modal.Body>
           <Modal.Footer>

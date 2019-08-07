@@ -16,6 +16,10 @@ module.exports = function(sequelize, DataTypes) {
     tag: {
       type: DataTypes.STRING,
       required: true
+    },
+    category: {
+      type: DataTypes.STRING,
+      required: true
     }
 
   
