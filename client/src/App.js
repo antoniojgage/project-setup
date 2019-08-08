@@ -56,6 +56,32 @@ export class App extends Component {
       locations: [...this.state.locations, getData],
     });
   };
+  handleShow = marker => {
+    this.setState({ show: true });
+  };
+  
+  onMarkerClick = async event => {
+    console.log(event);
+
+    // console.log('props = ', props);
+    let latitude = event.latLng.lat();
+    let longitude = event.latLng.lng();
+    console.log('you clicked marker at', latitude, longitude);
+
+    let getData = await axios
+      .get(`/api/location/locations/${latitude}/${longitude}`)
+      .then(response => response.data)
+      .catch(error => console.log(error));
+    console.log(`/api/location/locations/${latitude}/${longitude}`);
+    console.log(getData);
+    this.setState({ latitude, longitude });
+    this.setState({ activeMarker: getData });
+
+    console.log(this.state.activeMarker);
+    this.handleShow();
+
+  };
+
 
   render() {
     return (
@@ -64,6 +90,7 @@ export class App extends Component {
         <Map
           locations={this.state.locations}
           onMapClicked={this.onMapClicked}
+          onMarkerClick={this.onMarkerClick}
         />
         <Search
           onSearchSelection={this.onSearchSelection}

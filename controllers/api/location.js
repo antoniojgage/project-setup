@@ -6,12 +6,13 @@ router.get('/locations/:latitude?/:longitude?', function(req, res) {
 
   if (req.params.latitude) {
     console.log('Latitude was found, running single get query');
-    db.Location.findAll({
+    db.Location.findOne({
       where: {
-        latitude: req.params.latitude,
-        longitude: req.params.longitude,
+        latitude: parseFloat(req.params.latitude).toFixed(5),
+        longitude: parseFloat(req.params.longitude).toFixed(5),
       },
     }).then(results => {
+      console.log(parseFloat(req.params.latitude));
       console.log(results);
       res.send(results);
     });

@@ -16,29 +16,14 @@ export class MapContainer extends Component {
     activeMarker: {},
     selectedPlace: {},
     showingInfoWindow: false,
-    show: false,
     tag: '',
     renderMarkers: 0,
   };
 
-  onMarkerClick = async event => {
-    // console.log('props = ', props);
-    let latitude = event.latLng.lat();
-    let longitude = event.latLng.lng();
-    console.log('you clicked marker at', latitude, longitude);
+  
 
-    let getData = await axios
-      .get(`/api/location/locations/${latitude}/${longitude}`)
-      .then(response => response.data)
-      .catch(error => console.log(error));
-    // getdata.tag
-    console.log(getData);
-    this.setState({ latitude, longitude, });
-
-    this.handleShow();
-  };
-
-  renderMarkers = locations =>
+  
+  renderMarkers = (locations, onMarkerClick) =>
     locations.map((marker, i) => (
       <Marker
         key={i}
@@ -46,7 +31,7 @@ export class MapContainer extends Component {
           lat: parseFloat(marker.latitude),
           lng: parseFloat(marker.longitude),
         }}
-        onClick={this.onMarkerClick}
+        onClick={onMarkerClick}
       />
     ));
 
@@ -64,7 +49,7 @@ export class MapContainer extends Component {
 
     console.log('Put Data method called', getData);
     this.setState({
-      activeMarker: null,
+      activeMarker: getData,
       showingInfoWindow: false,
       tag: '',
       show: false,
@@ -83,9 +68,7 @@ export class MapContainer extends Component {
     this.setState({ show: false, tag: '' });
   };
 
-  handleShow = () => {
-    this.setState({ show: true });
-  };
+
 
   handleInputChange = event => {
     // Getting the value and name of the input which triggered the change
@@ -98,14 +81,15 @@ export class MapContainer extends Component {
   };
 
   render() {
-    let { locations, onMapClicked } = this.props;
+    console.log(this.props.onMarkerClick);
+    let { locations, onMapClicked, onMarkerClick } = this.props;
     return (
       <GoogleMap
         onClick={onMapClicked}
         defaultZoom={12}
         defaultCenter={{ lat: 30.2672, lng: -97.7431 }}
       >
-        {this.renderMarkers(locations)}
+        {this.renderMarkers(locations, onMarkerClick)}
         <Modal show={this.state.show} onHide={this.handleShow}>
           <Modal.Header>
             <Modal.Title>Add a tag</Modal.Title>
@@ -119,6 +103,11 @@ export class MapContainer extends Component {
                 type="text"
                 placeholder="Tag"
               />
+              {this.state.activeMarker.tag && (
+                <p className="text-dark">
+                  Current Tag: {this.state.activeMarker.tag}
+                </p>
+              )}
               {/* <input
                 value={this.state.category}
                 name="category"
@@ -127,31 +116,30 @@ export class MapContainer extends Component {
                 placeholder="Category"
               /> */}
 
-              <li>
-                <label>
-                  <input
-                    type="radio"
-                    name="category"
-                    value="small"
-                    checked={this.state.category === 'small'}
-                    onChange={this.handleInputChange}
-                  />
-                  Small
-                </label>
-              </li>
+              <br></br>
+              <label>
+                <input
+                  type="radio"
+                  name="category"
+                  value="parks"
+                  checked={this.state.category === 'parks'}
+                  onChange={this.handleInputChange}
+                /> Park 
+              </label>
+              <br></br>
+              
 
-              <li>
-                <label>
-                  <input
-                    type="radio"
-                    name="category"
-                    value="medium"
-                    checked={this.state.category === 'medium'}
-                    onChange={this.handleInputChange}
-                  />
-                  Medium
-                </label>
-              </li>
+             
+              <label>
+                <input
+                  type="radio"
+                  name="category"
+                  value="water"
+                  checked={this.state.category === 'water'}
+                  onChange={this.handleInputChange}
+                /> Water
+              </label>
+            
 
               <li>
                 <label>
