@@ -3,6 +3,7 @@ import Header from './components/Header/Header';
 import Map from './components/Map';
 import Search from './components/Search/Search';
 import Footer from './components/Footer/Footer';
+import CategoryBtn from './components/CategoryBtn/Category';
 const axios = require('axios');
 export class App extends Component {
   state = {
@@ -41,7 +42,6 @@ export class App extends Component {
   onMapClicked = async event => {
     let latitude = event.latLng.lat();
     let longitude = event.latLng.lng();
-    console.log('map was clicked at', latitude, longitude);
 
     let getData = await axios
       .post(`/api/location/locations`, {
@@ -51,37 +51,40 @@ export class App extends Component {
       .then(response => response.data)
       .catch(error => console.log(error));
 
-    console.log(getData, ' = singleRecord');
     this.setState({
       locations: [...this.state.locations, getData],
     });
+    return {
+      latitude,
+      longitude,
+      getData,
+    };
   };
-  handleShow = marker => {
-    this.setState({ show: true });
-  };
-  
-  onMarkerClick = async event => {
-    console.log(event);
 
-    // console.log('props = ', props);
+  handleShow = marker => {
+    this.setState({ show: true, activeMarker: marker });
+  };
+
+  onMarkerClick = async event => {
     let latitude = event.latLng.lat();
     let longitude = event.latLng.lng();
-    console.log('you clicked marker at', latitude, longitude);
 
     let getData = await axios
       .get(`/api/location/locations/${latitude}/${longitude}`)
       .then(response => response.data)
       .catch(error => console.log(error));
     console.log(`/api/location/locations/${latitude}/${longitude}`);
-    console.log(getData);
     this.setState({ latitude, longitude });
     this.setState({ activeMarker: getData });
+    console.log(getData);
 
-    console.log(this.state.activeMarker);
-    this.handleShow();
-
+    this.handleShow(getData);
+    return {
+      latitude,
+      longitude,
+      getData,
+    };
   };
-
 
   render() {
     return (
@@ -92,6 +95,7 @@ export class App extends Component {
           onMapClicked={this.onMapClicked}
           onMarkerClick={this.onMarkerClick}
         />
+        <CategoryBtn />
         <Search
           onSearchSelection={this.onSearchSelection}
           locations={this.state.locations}

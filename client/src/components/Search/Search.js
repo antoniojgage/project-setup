@@ -12,7 +12,7 @@ export default class Search extends React.Component {
   };
 
   onTextChanged = (event, data) => {
-    console.log('data = ' + data);
+    console.log('data = ' + JSON.stringify(data));
 
     // data is not an array here then - try doing data.locations
     let items = data.map(location => {

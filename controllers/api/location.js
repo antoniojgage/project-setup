@@ -62,7 +62,7 @@ router.post('/locations', (req, res) => {
 // so this is for updating? yes
 router.put('/locations', (req, res) => {
   console.log('Put route hit with:', req.body, req.params);
-  console.log(req.body.category);
+  console.log(req.body.latitude);
   var latitude = parseFloat(req.body.latitude).toFixed(5);
   var longitude = parseFloat(req.body.longitude).toFixed(5);
   db.Location.findOne({
@@ -80,6 +80,7 @@ router.put('/locations', (req, res) => {
         })
         .catch(err => console.log('this failed to update'));
     } else {
+      res.send('whatever');
       console.log('we are not finding any location');
     }
   });
