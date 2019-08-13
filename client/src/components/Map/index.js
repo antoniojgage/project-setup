@@ -24,31 +24,34 @@ export class MapContainer extends Component {
     tag: '',
     renderMarkers: 0,
     show: false,
+    filter: "parks"
   };
 
   renderMarkers = (locations, onMarkerClick) =>
-    locations.map((marker, i) => (
-      <Marker
-        key={i}
-        position={{
-          lat: parseFloat(marker.latitude),
-          lng: parseFloat(marker.longitude),
-        }}
-        onClick={async event => {
-          const data = await onMarkerClick(event);
-          console.log(data);
-          this.setState({
-            show: true,
-            activeMarker: data,
-            tag: data.getData.tag,
-            data,
-          });
-        }}
-      />
-    ));
-  
-  filterMarkers = (locations) =>
-  locations.filter()
+    locations
+      .filter(location => location.category === this.state.filter)
+      .map((marker, i) => (
+        <Marker
+          key={i}
+          position={{
+            lat: parseFloat(marker.latitude),
+            lng: parseFloat(marker.longitude),
+          }}
+          onClick={async event => {
+            const data = await onMarkerClick(event);
+            console.log(data);
+            this.setState({
+              show: true,
+              activeMarker: data,
+              tag: data.getData.tag,
+              data,
+            });
+          }}
+        />
+      ));
+
+  filterMarkers = locations =>
+    locations.filter(location => location.category === 'park');
 
   handleSubmit = async () => {
     let getData = await axios
@@ -175,9 +178,8 @@ export class MapContainer extends Component {
                   checked={this.state.category === 'large'}
                   onChange={this.handleInputChange}
                 />{' '}
-               ANother one
+                ANother one
               </label>
-              
             </form>
           </Modal.Body>
           {/* //where are the notes */}
