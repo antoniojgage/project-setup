@@ -3,6 +3,7 @@ import Header from './components/Header/Header';
 import Map from './components/Map';
 import Search from './components/Search/Search';
 import Footer from './components/Footer/Footer';
+import Modal from './components/Modal/Modal';
 import CategoryBtn from './components/CategoryBtn/Category';
 const axios = require('axios');
 export class App extends Component {
@@ -86,6 +87,10 @@ export class App extends Component {
     };
   };
 
+  getSelectedCategory = category => {
+    console.log(category);
+  };
+
   render() {
     return (
       <div>
@@ -94,12 +99,15 @@ export class App extends Component {
           locations={this.state.locations}
           onMapClicked={this.onMapClicked}
           onMarkerClick={this.onMarkerClick}
+          getSelectedCategory={this.getSelectedCategory}
         />
-        <CategoryBtn />
+        <CategoryBtn getSelectedCategory={this.getSelectedCategory} />
         <Search
           onSearchSelection={this.onSearchSelection}
           locations={this.state.locations}
         />
+        <Modal />
+
         <Footer />
       </div>
     );

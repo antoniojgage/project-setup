@@ -50,8 +50,8 @@ export class MapContainer extends Component {
         />
       ));
 
-  filterMarkers = locations =>
-    locations.filter(location => location.category === 'park');
+  // filterMarkers = locations =>
+  //   locations.filter(location => location.category === 'park');
 
   handleSubmit = async () => {
     let getData = await axios
