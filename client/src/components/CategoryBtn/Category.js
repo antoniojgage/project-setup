@@ -4,6 +4,7 @@ import Button from 'react-bootstrap/Button';
 
 export class Category extends Component {
   onCategory = value => {
+    // console.log(value);
     // getSelectedCategory() is located in App.js
     this.props.getSelectedCategory(value);
   };
@@ -14,20 +15,20 @@ export class Category extends Component {
         <Button
           as="input"
           type="button"
-          value="Park"
-          onClick={this.onCategory('park')}
+          value="Parks"
+          onClick={ () => this.onCategory('parks')}
         />
         <Button
           as="input"
           type="submit"
           value="Water"
-          onClick={this.onCategory('water')}
+          onClick={ () => this.onCategory('water')}
         />
         <Button
           as="input"
           type="reset"
           value="Reset"
-          onClick={this.onCategory('reset')}
+          onClick={ () => this.onCategory('reset')}
         />
       </div>
     );

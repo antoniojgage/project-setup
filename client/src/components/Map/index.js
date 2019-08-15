@@ -24,12 +24,18 @@ export class MapContainer extends Component {
     tag: '',
     renderMarkers: 0,
     show: false,
-    filter: "parks"
   };
 
-  renderMarkers = (locations, onMarkerClick) =>
+  renderMarkers = (locations, onMarkerClick, filter) =>
     locations
-      .filter(location => location.category === this.state.filter)
+      .filter(location => {
+        if (filter) {
+          return location.category === filter;
+        } else {
+          return location;
+        }
+      })
+
       .map((marker, i) => (
         <Marker
           key={i}
@@ -99,8 +105,12 @@ export class MapContainer extends Component {
   };
 
   render() {
-    let { locations, onMapClicked, onMarkerClick } = this.props;
-
+    let {
+      locations,
+      onMapClicked,
+      onMarkerClick,
+      filter,
+    } = this.props;
     return (
       <GoogleMap
         onClick={async event => {
@@ -115,7 +125,7 @@ export class MapContainer extends Component {
         defaultZoom={12}
         defaultCenter={{ lat: 30.2672, lng: -97.7431 }}
       >
-        {this.renderMarkers(locations, onMarkerClick)}
+        {this.renderMarkers(locations, onMarkerClick, filter)}
         <Modal show={this.state.show}>
           <Modal.Header>
             <Modal.Title>Add a tag</Modal.Title>

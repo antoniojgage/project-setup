@@ -10,6 +10,8 @@ export class App extends Component {
   state = {
     locations: [],
     selection: '',
+    filter: ""
+
   };
 
   async componentDidMount() {
@@ -89,6 +91,7 @@ export class App extends Component {
 
   getSelectedCategory = category => {
     console.log(category);
+    this.setState({ filter: category });
   };
 
   render() {
@@ -99,7 +102,7 @@ export class App extends Component {
           locations={this.state.locations}
           onMapClicked={this.onMapClicked}
           onMarkerClick={this.onMarkerClick}
-          getSelectedCategory={this.getSelectedCategory}
+          filter={this.state.filter}
         />
         <CategoryBtn getSelectedCategory={this.getSelectedCategory} />
         <Search
