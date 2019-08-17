@@ -15,12 +15,12 @@ class ExampleApp extends React.Component {
 
   componentDidMount() {
     console.log('The component mounted');
-    // const hasVisitedBefore = localStorage.getItem("hasVisitedBefore");
-    // if (!hasVisitedBefore) {
-    //   this.setState({ hasVisitedBefore: false });
-    //   localStorage.setItem("hasVisitedBefore", true);
-    // //   this.setState({ showModal: true });
-    // }
+    const hasVisitedBefore = localStorage.getItem("hasVisitedBefore");
+    if (!hasVisitedBefore) {
+      this.setState({ hasVisitedBefore: false });
+      localStorage.setItem("hasVisitedBefore", true);
+    //   this.setState({ showModal: true });
+    }
 
   }
 
