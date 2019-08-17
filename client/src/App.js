@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Header from './components/Header/Header';
 import Map from './components/Map';
-import Search from './components/Search/Search';
+// import Search from './components/Search/Search';
 import Footer from './components/Footer/Footer';
 import Modal from './components/Modal/Modal';
 import CategoryBtn from './components/CategoryBtn/Category';
@@ -105,10 +105,10 @@ export class App extends Component {
           filter={this.state.filter}
         />
         <CategoryBtn getSelectedCategory={this.getSelectedCategory} />
-        <Search
+        {/* <Search
           onSearchSelection={this.onSearchSelection}
           locations={this.state.locations}
-        />
+        /> */}
         <Modal />
 
         <Footer />

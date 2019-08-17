@@ -184,11 +184,11 @@ export class MapContainer extends Component {
                 <input
                   type="radio"
                   name="category"
-                  value="large"
+                  value="hiketrail"
                   checked={this.state.category === 'large'}
                   onChange={this.handleInputChange}
                 />{' '}
-                ANother one
+                Hike and Trail
               </label>
             </form>
           </Modal.Body>

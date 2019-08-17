@@ -11,24 +11,30 @@ export class Category extends Component {
 
   render() {
     return (
-      <div>
+      <div className="buttons">
         <Button
+          className="parks"
           as="input"
-          type="button"
+          type="submit"
           value="Parks"
+          variant="success"
           onClick={ () => this.onCategory('parks')}
-        />
+        />{" "}
         <Button
+          className="water"
           as="input"
           type="submit"
           value="Water"
+          variant="success"
           onClick={ () => this.onCategory('water')}
-        />
+        />{" "}
         <Button
+          className="hiketrail"
           as="input"
-          type="reset"
-          value="Reset"
-          onClick={ () => this.onCategory('reset')}
+          type="submit"
+          value="Hike and Trail"
+          variant="success"
+          onClick={ () => this.onCategory('hiketrail')}
         />
       </div>
     );

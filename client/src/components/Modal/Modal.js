@@ -15,12 +15,12 @@ class ExampleApp extends React.Component {
 
   componentDidMount() {
     console.log('The component mounted');
-    const hasVisitedBefore = localStorage.getItem("hasVisitedBefore");
-    if (!hasVisitedBefore) {
-      this.setState({ hasVisitedBefore: false });
-      localStorage.setItem("hasVisitedBefore", true);
-      this.setState({ showModal: true });
-    }
+    // const hasVisitedBefore = localStorage.getItem("hasVisitedBefore");
+    // if (!hasVisitedBefore) {
+    //   this.setState({ hasVisitedBefore: false });
+    //   localStorage.setItem("hasVisitedBefore", true);
+    // //   this.setState({ showModal: true });
+    // }
 
   }
 
@@ -52,12 +52,12 @@ class ExampleApp extends React.Component {
               </span>
             </h5>
             <strong>Drop a pin</strong> to share your favorite park,
-            water, or nature spot! <br />
-            <strong>Filter pins</strong> by category.
+            water, or nature spot <br />
+            <strong>Filter pins</strong> by category
             <strong />
           </div>
 
-          <button onClick={this.handleCloseModal}>Got it!</button>
+          <button className="gotit" onClick={this.handleCloseModal}>Got it!</button>
         </Modal>
       </div>
     );

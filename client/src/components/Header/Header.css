@@ -3,13 +3,14 @@
     bottom:0;
     right:0;
     background: 
-    url("./Assets/bartonHeader.jpeg");
+    url("./Assets/tomek-baginski-2g7CAh4jzeY-unsplash.jpg");
 background-position: center;
 background-repeat: no-repeat;
 background-attachment: scroll;
 background-size: cover;
+height: 250px;
 }
 
 h1,h4,p {
-    color: white;
+    color: whitesmoke;
 }
