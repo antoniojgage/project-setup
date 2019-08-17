@@ -185,7 +185,7 @@ export class MapContainer extends Component {
                   type="radio"
                   name="category"
                   value="hiketrail"
-                  checked={this.state.category === 'large'}
+                  checked={this.state.category === 'hiketrail'}
                   onChange={this.handleInputChange}
                 />{' '}
                 Hike and Trail
